@@ -1,7 +1,7 @@
 //src/constants/siteConfig.ts
 
 export const siteConfig = {
-  sheetId: "VOTRE_GOOGLE_SHEET_ID_ICI",
+  sheetId: "2PACX-1vR_KXhYfn0T85N-0xzto4DLRPMl-AVZtMT9KwhpUqJJiNDopvdF-N0cfc0SnvxU_YUauHexDIjGi0bm",
   sheetTabs: {
     general: "General",
     news: "News",
