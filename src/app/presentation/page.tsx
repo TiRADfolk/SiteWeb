@@ -1,10 +1,9 @@
-
-
 import { fetchGeneralConfig, fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig, uiText } from '@/constants/siteConfig';
 import { MemberItem } from '@/types';
 import MemberCard from '@/components/MemberCard';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 export default async function PresentationPage() {
   const config = await fetchGeneralConfig();
@@ -23,7 +22,7 @@ export default async function PresentationPage() {
         </div>
         {config.logo && (
           <div className="rounded-lg overflow-hidden shadow-inner border-2 border-[#A0522D]/20">
-            <img src={formatDriveImageUrl(config.logo)} alt={config.nom} className="w-full h-auto object-cover" />
+            <ImageWithFallback src={formatDriveImageUrl(config.logo)} alt={config.nom} className="w-full h-auto object-cover" />
           </div>
         )}
       </div>
