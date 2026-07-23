@@ -1,9 +1,8 @@
-
-
 import { NewsItem } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
 import { formatDateFR } from '@/utils/formatters';
 import { uiText } from '@/constants/siteConfig';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 interface FooterProps {
   email?: string;
@@ -25,11 +24,10 @@ export default function Footer({ email, phone, address, news = [] }: FooterProps
               <div key={item.id} className="bg-[#3A2D28] rounded-lg overflow-hidden shadow-sm flex flex-col">
                 {item.image && (
                   <div className="aspect-video w-full overflow-hidden bg-black/20">
-                    <img
+                    <ImageWithFallback
                       src={formatDriveImageUrl(item.image)}
                       alt={item.titre}
                       className="w-full h-full object-cover"
-                      onError={(e) => { (e.target as HTMLImageElement).src = uiText.common.fallbackImage; }}
                     />
                   </div>
                 )}
