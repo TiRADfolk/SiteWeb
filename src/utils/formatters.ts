@@ -1,4 +1,4 @@
-//src/utils/formatters.ts
+
 
 export function formatDateFR(dateString: string): string {
   if (!dateString) return '';
