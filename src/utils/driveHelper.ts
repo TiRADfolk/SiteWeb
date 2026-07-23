@@ -1,4 +1,4 @@
-//src/utils/driveHelper.ts
+
 
 export function formatDriveImageUrl(url: string | undefined): string {
   if (!url || typeof url !== 'string') return '';
