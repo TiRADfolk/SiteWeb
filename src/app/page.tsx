@@ -1,11 +1,10 @@
-
-
 import Link from 'next/link';
 import { fetchGeneralConfig, fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig, uiText } from '@/constants/siteConfig';
 import { EventItemType } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
 import { isFutureDate, formatDateFR } from '@/utils/formatters';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 export default async function HomePage() {
   const config = await fetchGeneralConfig();
@@ -40,11 +39,10 @@ export default async function HomePage() {
 
       <section className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-8">
         {config.logo && (
-          <img 
+          <ImageWithFallback 
             src={formatDriveImageUrl(config.logo)} 
             alt={config.nom} 
             className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#A0522D]"
-            onError={(e) => { (e.target as HTMLImageElement).src = uiText.common.fallbackImage; }}
           />
         )}
         <div className="space-y-3 text-center md:text-left flex-grow">
