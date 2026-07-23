@@ -1,4 +1,4 @@
-//src/app/contact/page.tsx
+
 
 import { fetchGeneralConfig } from '@/utils/fetchSheets';
 import { uiText } from '@/constants/siteConfig';
