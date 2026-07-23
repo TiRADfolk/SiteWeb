@@ -1,4 +1,4 @@
-//src/components/Footer.tsx
+
 
 import { NewsItem } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
