@@ -1,4 +1,4 @@
-//src/components/Navbar.tsx
+
 
 import Link from 'next/link';
 import { uiText } from '@/constants/siteConfig';
