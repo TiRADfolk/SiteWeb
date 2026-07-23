@@ -1,4 +1,4 @@
-//src/components/MemberCard.tsx
+
 
 import { MemberItem } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
