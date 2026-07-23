@@ -1,4 +1,4 @@
-//src/types/index.ts
+
 
 export interface GeneralConfig {
   nom: string;
