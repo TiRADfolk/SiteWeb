@@ -1,8 +1,7 @@
-
-
 import { MemberItem } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
 import { uiText } from '@/constants/siteConfig';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 export default function MemberCard({ member }: { member: MemberItem }) {
   const imageUrl = formatDriveImageUrl(member.photoUrl) || uiText.common.fallbackImage;
@@ -10,13 +9,10 @@ export default function MemberCard({ member }: { member: MemberItem }) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden border border-[#D97706]/20 flex flex-col">
       <div className="aspect-video w-full relative bg-gray-200">
-        <img
+        <ImageWithFallback
           src={imageUrl}
           alt={member.nom}
           className="w-full h-full object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = uiText.common.fallbackImage;
-          }}
         />
       </div>
       <div className="p-4 flex flex-col flex-grow">
