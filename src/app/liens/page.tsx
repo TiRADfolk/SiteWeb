@@ -1,9 +1,8 @@
-
-
 import { fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig, uiText } from '@/constants/siteConfig';
 import { UsefulLink } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 export default async function LiensPage() {
   const links = await fetchSheetData<UsefulLink>(siteConfig.sheetTabs.liensUtiles);
@@ -32,13 +31,10 @@ export default async function LiensPage() {
                   className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:border-[#D97706] transition flex items-center gap-4 group"
                 >
                   {link.lienLogoUrl && (
-                    <img
+                    <ImageWithFallback
                       src={formatDriveImageUrl(link.lienLogoUrl)}
                       alt={link.lienTitre}
                       className="w-12 h-12 rounded-lg object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = uiText.common.fallbackImage;
-                      }}
                     />
                   )}
                   <div>
