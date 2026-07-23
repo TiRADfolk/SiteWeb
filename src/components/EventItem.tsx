@@ -1,4 +1,4 @@
-//src/components/EventItem.tsx
+
 
 import { EventItemType } from '@/types';
 import { formatDateFR } from '@/utils/formatters';
