@@ -1,9 +1,8 @@
-
-
 import { NewsItem } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
 import { formatDateFR } from '@/utils/formatters';
 import { uiText } from '@/constants/siteConfig';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 export default function NewsCard({ item }: { item: NewsItem }) {
   const imageUrl = formatDriveImageUrl(item.image) || uiText.common.fallbackImage;
@@ -12,13 +11,10 @@ export default function NewsCard({ item }: { item: NewsItem }) {
     <article className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col transition hover:shadow-lg">
       {item.image && (
         <div className="aspect-video w-full overflow-hidden bg-gray-100">
-          <img
+          <ImageWithFallback
             src={imageUrl}
             alt={item.titre}
             className="w-full h-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = uiText.common.fallbackImage;
-            }}
           />
         </div>
       )}
