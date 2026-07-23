@@ -1,4 +1,4 @@
-//src/app/medias/MediaClientContent.tsx
+
 
 'use client';
 
