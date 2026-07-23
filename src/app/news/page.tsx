@@ -1,4 +1,4 @@
-//src/app/news/page.tsx
+
 
 import { fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig, uiText } from '@/constants/siteConfig';
