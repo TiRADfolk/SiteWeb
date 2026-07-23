@@ -1,11 +1,10 @@
-
-
 'use client';
 
 import { useState } from 'react';
 import { MediaItem } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
 import { uiText } from '@/constants/siteConfig';
+import ImageWithFallback from '@/components/ImageWithFallback';
 
 export default function MediaClientContent({ medias }: { medias: MediaItem[] }) {
   const [filter, setFilter] = useState<'Tous' | 'Image' | 'Video' | 'Audio'>('Tous');
@@ -49,13 +48,10 @@ export default function MediaClientContent({ medias }: { medias: MediaItem[] }) 
 
                 <div className="p-4 flex-grow flex items-center justify-center bg-gray-50">
                   {isImage && (
-                    <img
+                    <ImageWithFallback
                       src={formatDriveImageUrl(media.url)}
                       alt={media.titre}
                       className="w-full h-64 object-cover rounded-lg"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = uiText.common.fallbackImage;
-                      }}
                     />
                   )}
 
