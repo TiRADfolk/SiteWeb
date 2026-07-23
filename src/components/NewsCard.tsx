@@ -1,4 +1,4 @@
-//src/components/NewsCard.tsx
+
 
 import { NewsItem } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
