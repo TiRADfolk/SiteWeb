@@ -22,3 +22,14 @@ body {
 .whitespace-pre-line {
   white-space: pre-line;
 }
+/* Empêche les éléments médias de dépasser de l'écran sur mobile */
+img, iframe, video {
+  max-width: 100% !important;
+  height: auto;
+}
+
+/* Casse automatiquement les textes/liens trop longs */
+p, h1, h2, h3, a {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
