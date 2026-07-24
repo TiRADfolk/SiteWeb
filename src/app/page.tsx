@@ -47,7 +47,7 @@ export default async function HomePage() {
         )}
         <div className="space-y-3 text-center md:text-left flex-grow">
           <h2 className="text-2xl font-bold text-[#2C221E]">{config.presentationTitre}</h2>
-          <p className="text-gray-700 whitespace-pre-line leading-relaxed line-clamp-4">{config.presentationTexte}</p>
+          <p className="text-gray-700 whitespace-pre-line leading-relaxed">{config.presentationTexte}</p>
           <Link href="/presentation" className="inline-block text-[#A0522D] font-bold hover:underline pt-2">
             {uiText.common.readMore} →
           </Link>
@@ -69,7 +69,7 @@ export default async function HomePage() {
                   <div>
                     <span className="text-xs font-bold text-[#D97706] block">{formatDateFR(event.date)}</span>
                     <h3 className="font-bold text-[#2C221E]">{event.title}</h3>
-                    <p className="text-xs text-gray-600">{event.location}</p>
+                    <p className="text-xs text-gray-600">{event.estPublic ? 'Public' : 'Privé'}</p>
                   </div>
                   <Link href="/agenda" className="text-xs bg-[#A0522D] text-white px-3 py-1.5 rounded hover:bg-[#804020] transition">
                     Voir
@@ -82,34 +82,9 @@ export default async function HomePage() {
 
         <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
           <h2 className="text-2xl font-bold text-[#2C221E] border-b-2 border-[#A0522D] pb-2">{uiText.nav.contact}</h2>
+          <p className="text-gray-700 leading-relaxed text-sm">
+            Pour toute demande de réservation, concert, bal folk ou renseignement, n'hésitez pas à nous contacter directement.
+          </p>
           <div className="space-y-4 text-gray-800 pt-2">
             {config.email && (
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-amber-50/50 rounded-lg">
-                <span className="font-bold text-[#2C221E]">Email :</span>
-                <a href={`mailto:${config.email}`} className="text-[#A0522D] hover:underline font-medium">
-                  {config.email}
-                </a>
-              </div>
-            )}
-
-            {config.telephone && (
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-amber-50/50 rounded-lg">
-                <span className="font-bold text-[#2C221E]">Téléphone :</span>
-                <a href={`tel:${config.telephone}`} className="text-[#A0522D] hover:underline font-medium">
-                  {config.telephone}
-                </a>
-              </div>
-            )}
-
-            {config.adresse && (
-              <div className="p-4 bg-amber-50/50 rounded-lg space-y-1">
-                <span className="font-bold text-[#2C221E] block">Adresse & Siège :</span>
-                <p className="text-gray-700 whitespace-pre-line text-sm">{config.adresse}</p>
-              </div>
-            )}
-          </div>
-        </section>
-      </div>
-    </div>
-  );
-}
+              <div className="flex flex-col
