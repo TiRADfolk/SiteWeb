@@ -80,18 +80,34 @@ export default async function HomePage() {
           )}
         </section>
 
-        <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4 flex flex-col justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-[#2C221E] border-b-2 border-[#A0522D] pb-2 mb-4">{uiText.home.quickContact}</h2>
-            <div className="space-y-3 text-gray-700">
-              {config.email && <p className="text-sm"><strong className="text-[#2C221E]">Email :</strong> {config.email}</p>}
-              {config.telephone && <p className="text-sm"><strong className="text-[#2C221E]">Téléphone :</strong> {config.telephone}</p>}
-              {config.adresse && <p className="text-sm whitespace-pre-line"><strong className="text-[#2C221E]">Adresse :</strong> {config.adresse}</p>}
-            </div>
+        <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
+          <h2 className="text-2xl font-bold text-[#2C221E] border-b-2 border-[#A0522D] pb-2">{uiText.nav.contact}</h2>
+          <div className="space-y-4 text-gray-800 pt-2">
+            {config.email && (
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-amber-50/50 rounded-lg">
+                <span className="font-bold text-[#2C221E]">Email :</span>
+                <a href={`mailto:${config.email}`} className="text-[#A0522D] hover:underline font-medium">
+                  {config.email}
+                </a>
+              </div>
+            )}
+
+            {config.telephone && (
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-amber-50/50 rounded-lg">
+                <span className="font-bold text-[#2C221E]">Téléphone :</span>
+                <a href={`tel:${config.telephone}`} className="text-[#A0522D] hover:underline font-medium">
+                  {config.telephone}
+                </a>
+              </div>
+            )}
+
+            {config.adresse && (
+              <div className="p-4 bg-amber-50/50 rounded-lg space-y-1">
+                <span className="font-bold text-[#2C221E] block">Adresse & Siège :</span>
+                <p className="text-gray-700 whitespace-pre-line text-sm">{config.adresse}</p>
+              </div>
+            )}
           </div>
-          <Link href="/contact" className="mt-6 block text-center bg-[#2C221E] hover:bg-[#42332d] text-white font-bold py-3 px-4 rounded-lg transition">
-            {uiText.common.contactUs}
-          </Link>
         </section>
       </div>
     </div>
