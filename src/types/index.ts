@@ -1,5 +1,3 @@
-
-
 export interface GeneralConfig {
   nom: string;
   slogan: string;
@@ -62,4 +60,14 @@ export interface UsefulLink {
   lienUrl: string;
   lienCategorie: string;
   lienLogoUrl: string;
+}
+
+export interface ResourceItem {
+  id: string;
+  date: string;
+  afficher: string;
+  categorie: string;
+  description: string;
+  url1: string;
+  url2: string;
 }
