@@ -69,7 +69,9 @@ export default async function HomePage() {
                   <div>
                     <span className="text-xs font-bold text-[#D97706] block">{formatDateFR(event.date)}</span>
                     <h3 className="font-bold text-[#2C221E]">{event.title}</h3>
-                    <p className="text-xs text-gray-600">{event.estPublic ? 'Public' : 'Privé'}</p>
+                    <p className="text-xs text-gray-600">
+                      {event.estPublic?.toLowerCase() === 'oui' ? uiText.agenda.public : uiText.agenda.private}
+                    </p>
                   </div>
                   <Link href="/agenda" className="text-xs bg-[#A0522D] text-white px-3 py-1.5 rounded hover:bg-[#804020] transition">
                     Voir
