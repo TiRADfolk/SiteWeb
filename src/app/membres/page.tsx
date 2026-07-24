@@ -13,8 +13,8 @@ export default async function MembresPage() {
   const config = await fetchGeneralConfig();
   const resources = await fetchSheetData<ResourceItem>('membres');
 
-  // TEMPORAIRE : filtre désactivé pour tester
   const visibleResources = resources
+    .filter(r => r.afficher?.toLowerCase().includes('oui'))
     .sort((a, b) => parseFrenchDate(b.date) - parseFrenchDate(a.date));
 
   return (
