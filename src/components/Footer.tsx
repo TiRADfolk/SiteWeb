@@ -1,47 +1,14 @@
-import { NewsItem } from '@/types';
-import { formatDriveImageUrl } from '@/utils/driveHelper';
-import { formatDateFR } from '@/utils/formatters';
 import { uiText } from '@/constants/siteConfig';
-import ImageWithFallback from '@/components/ImageWithFallback';
 
 interface FooterProps {
   email?: string;
   phone?: string;
   address?: string;
-  news?: NewsItem[];
 }
 
-export default function Footer({ email, phone, address, news = [] }: FooterProps) {
-  const homeNews = news.filter(n => n.afficherSurAccueil === 'Oui').slice(0, 3);
-
+export default function Footer({ email, phone, address }: FooterProps) {
   return (
     <footer className="bg-[#2C221E] text-[#FAF7F2] mt-16 border-t-4 border-[#A0522D]">
-      {homeNews.length > 0 && (
-        <div className="max-w-7xl mx-auto px-4 py-10 border-b border-gray-700">
-          <h3 className="text-2xl font-bold text-[#D97706] mb-6">{uiText.home.latestNews}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {homeNews.map((item) => (
-              <div key={item.id} className="bg-[#3A2D28] rounded-lg overflow-hidden shadow-sm flex flex-col">
-                {item.image && (
-                  <div className="aspect-video w-full overflow-hidden bg-black/20">
-                    <ImageWithFallback
-                      src={formatDriveImageUrl(item.image)}
-                      alt={item.titre}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <div className="p-4 flex flex-col flex-grow">
-                  <span className="text-xs text-[#D97706] font-semibold mb-1">{formatDateFR(item.date)}</span>
-                  <h4 className="font-bold text-lg mb-2 text-white">{item.titre}</h4>
-                  <p className="text-xs text-gray-300 line-clamp-3 whitespace-pre-line flex-grow">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
           <h4 className="text-lg font-bold text-[#D97706] mb-2">{uiText.nav.contact}</h4>
