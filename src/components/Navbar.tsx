@@ -1,5 +1,3 @@
-
-
 import Link from 'next/link';
 import { uiText } from '@/constants/siteConfig';
 
@@ -21,7 +19,7 @@ export default function Navbar({ siteName }: NavbarProps) {
           <Link href="/agenda" className="hover:text-[#D97706] transition">{uiText.nav.agenda}</Link>
           <Link href="/medias" className="hover:text-[#D97706] transition">{uiText.nav.medias}</Link>
           <Link href="/liens" className="hover:text-[#D97706] transition">{uiText.nav.links}</Link>
-          <Link href="/contact" className="hover:text-[#D97706] transition">{uiText.nav.contact}</Link>
+          <Link href="/membres" className="hover:text-[#D97706] transition">Privé</Link>
         </div>
       </div>
     </nav>
