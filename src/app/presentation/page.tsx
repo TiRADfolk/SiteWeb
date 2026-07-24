@@ -17,7 +17,6 @@ export default async function PresentationPage() {
 
       <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <div className="space-y-4 text-gray-700 whitespace-pre-line leading-relaxed">
-          <p className="font-medium text-lg text-[#A0522D]">{config.presentationTexte}</p>
           <p>{config.descriptionLongue}</p>
         </div>
         {config.logo && (
