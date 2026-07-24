@@ -1,13 +1,10 @@
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { fetchGeneralConfig, fetchSheetData } from '@/utils/fetchSheets';
-import { siteConfig } from '@/constants/siteConfig';
-import { NewsItem } from '@/types';
+import { fetchGeneralConfig } from '@/utils/fetchSheets';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const config = await fetchGeneralConfig();
-  const news = await fetchSheetData<NewsItem>(siteConfig.sheetTabs.news);
 
   return (
     <html lang="fr" className="overflow-x-hidden">
@@ -20,7 +17,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           email={config.email} 
           phone={config.telephone} 
           address={config.adresse} 
-          news={news}
         />
       </body>
     </html>
