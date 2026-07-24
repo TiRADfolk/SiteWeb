@@ -87,4 +87,32 @@ export default async function HomePage() {
           </p>
           <div className="space-y-4 text-gray-800 pt-2">
             {config.email && (
-              <div className="flex flex-col
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-amber-50/50 rounded-lg">
+                <span className="font-bold text-[#2C221E]">Email :</span>
+                <a href={`mailto:${config.email}`} className="text-[#A0522D] hover:underline font-medium">
+                  {config.email}
+                </a>
+              </div>
+            )}
+
+            {config.telephone && (
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-amber-50/50 rounded-lg">
+                <span className="font-bold text-[#2C221E]">Téléphone :</span>
+                <a href={`tel:${config.telephone}`} className="text-[#A0522D] hover:underline font-medium">
+                  {config.telephone}
+                </a>
+              </div>
+            )}
+
+            {config.adresse && (
+              <div className="p-4 bg-amber-50/50 rounded-lg space-y-1">
+                <span className="font-bold text-[#2C221E] block">Adresse & Siège :</span>
+                <p className="text-gray-700 whitespace-pre-line text-sm">{config.adresse}</p>
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
