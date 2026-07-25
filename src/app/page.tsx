@@ -34,17 +34,16 @@ export default async function HomePage() {
         <div className="p-6 max-w-3xl space-y-4">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">{config.nom || uiText.home.heroTitle}</h1>
           <p className="text-lg md:text-xl text-gray-200">{config.slogan || uiText.home.heroSubtitle}</p>
-          {/* Boutons supprimés */}
         </div>
       </section>
 
-      {/* Section Logo + Présentation */}
-      <section className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-8">
+      {/* Section Logo + Présentation - Réduite de moitié */}
+      <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-6 max-w-4xl mx-auto">
         {config.logo && (
           <ImageWithFallback
             src={formatDriveImageUrl(config.logo)}
             alt={config.nom}
-            className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#A0522D]"
+            className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-[#A0522D]"
           />
         )}
         <div className="space-y-3 text-center md:text-left flex-grow">
