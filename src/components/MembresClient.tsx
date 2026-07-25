@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link'; // Ajoute l'import pour Link
 import { ResourceItem } from '@/types';
 
 interface MembresClientProps {
@@ -8,6 +9,7 @@ interface MembresClientProps {
   dateProchaineRepet: string;
   aTravailler: string;
   aReflechir: string;
+  adminSiteUrl: string; // Nouvelle prop
   resources: ResourceItem[];
 }
 
@@ -16,6 +18,7 @@ export default function MembresClient({
   dateProchaineRepet,
   aTravailler,
   aReflechir,
+  adminSiteUrl,
   resources,
 }: MembresClientProps) {
   const [unlocked, setUnlocked] = useState(false);
@@ -72,9 +75,18 @@ export default function MembresClient({
 
   return (
     <div className="space-y-8">
-      <h1 className="text-3xl font-extrabold text-[#2C221E] border-b-4 border-[#A0522D] pb-2 inline-block">
-        Espace Membres
-      </h1>
+      {/* En-tête avec titre et bouton Admin */}
+      <div className="flex justify-between items-center border-b-4 border-[#A0522D] pb-2">
+        <h1 className="text-3xl font-extrabold text-[#2C221E]">Espace Membres</h1>
+        {adminSiteUrl && (
+          <Link
+            href={adminSiteUrl}
+            className="bg-[#D97706] hover:bg-[#b56305] text-white font-bold py-2 px-4 rounded-lg transition shadow"
+          >
+            Admin
+          </Link>
+        )}
+      </div>
 
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div>
