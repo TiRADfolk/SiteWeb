@@ -23,6 +23,7 @@ export default async function MembresPage() {
       dateProchaineRepet={config['Date prochaine répet'] || ''}
       aTravailler={config['A travailler'] || ''}
       aReflechir={config['A réfléchir'] || ''}
+      adminSiteUrl={config['adminSite'] || ''} // Passe l'URL du bouton Admin
       resources={visibleResources}
     />
   );
