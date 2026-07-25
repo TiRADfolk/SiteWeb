@@ -1,7 +1,4 @@
-'use client';
-
 import Link from 'next/link';
-import { useState } from 'react';
 import { fetchGeneralConfig, fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig, uiText } from '@/constants/siteConfig';
 import { EventItemType } from '@/types';
@@ -16,28 +13,7 @@ const SearchIcon = () => (
   </svg>
 );
 
-// Composant pour la modale d'image agrandie
-const ImageModal = ({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) => (
-  <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4" onClick={onClose}>
-    <div className="relative max-w-full max-h-full">
-      <button
-        onClick={onClose}
-        className="absolute -top-10 right-0 text-white text-3xl hover:text-gray-300"
-        aria-label="Fermer"
-      >
-        ✕
-      </button>
-      <ImageWithFallback
-        src={src}
-        alt={alt}
-        className="max-w-[90vw] max-h-[90vh] object-contain"
-      />
-    </div>
-  </div>
-);
-
-export default function HomePage() {
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+export default async function HomePage() {
   const config = await fetchGeneralConfig();
   const events = await fetchSheetData<EventItemType>(siteConfig.sheetTabs.agenda);
 
@@ -58,20 +34,18 @@ export default function HomePage() {
         <div className="p-6 max-w-3xl space-y-4">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">{config.nom || uiText.home.heroTitle}</h1>
           <p className="text-lg md:text-xl text-gray-200">{config.slogan || uiText.home.heroSubtitle}</p>
-          {/* Boutons supprimés ici */}
+          {/* Boutons supprimés */}
         </div>
       </section>
 
       {/* Section Logo + Présentation */}
       <section className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-8">
         {config.logo && (
-          <button onClick={() => setIsImageModalOpen(true)} aria-label="Agrandir le logo">
-            <ImageWithFallback
-              src={formatDriveImageUrl(config.logo)}
-              alt={config.nom}
-              className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#A0522D] hover:opacity-80 transition"
-            />
-          </button>
+          <ImageWithFallback
+            src={formatDriveImageUrl(config.logo)}
+            alt={config.nom}
+            className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#A0522D]"
+          />
         )}
         <div className="space-y-3 text-center md:text-left flex-grow">
           <h2 className="text-2xl font-bold text-[#2C221E]">{config.presentationTitre}</h2>
@@ -82,15 +56,6 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-
-      {/* Modale pour le logo */}
-      {isImageModalOpen && config.logo && (
-        <ImageModal
-          src={formatDriveImageUrl(config.logo)}
-          alt={config.nom}
-          onClose={() => setIsImageModalOpen(false)}
-        />
-      )}
 
       {/* Grille des sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -160,7 +125,7 @@ export default function HomePage() {
         </section>
       </div>
 
-      {/* Nouvelle section Navigation après Contact */}
+      {/* Section Navigation */}
       <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <h2 className="text-2xl font-bold text-[#2C221E] border-b-2 border-[#A0522D] pb-2 mb-4">Navigation</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
