@@ -26,9 +26,9 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-12">
-      {/* Section Héro */}
+      {/* Section Héro - Moins haute */}
       <section
-        className="relative rounded-2xl overflow-hidden bg-cover bg-center h-[450px] flex items-center justify-center text-center text-white shadow-lg"
+        className="relative rounded-2xl overflow-hidden bg-cover bg-center h-[300px] flex items-center justify-center text-center text-white shadow-lg"
         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${heroBg})` }}
       >
         <div className="p-6 max-w-3xl space-y-4">
@@ -37,13 +37,13 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Section Logo + Présentation - Réduite de moitié */}
+      {/* Section Logo + Présentation - Logo agrandi x1.5 */}
       <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-6 max-w-4xl mx-auto">
         {config.logo && (
           <ImageWithFallback
             src={formatDriveImageUrl(config.logo)}
             alt={config.nom}
-            className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-[#A0522D]"
+            className="w-36 h-36 md:w-48 md:h-48 rounded-full object-cover border-4 border-[#A0522D]"
           />
         )}
         <div className="space-y-3 text-center md:text-left flex-grow">
