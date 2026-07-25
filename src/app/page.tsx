@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
 import { fetchGeneralConfig, fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig, uiText } from '@/constants/siteConfig';
 import { EventItemType } from '@/types';
@@ -13,7 +16,28 @@ const SearchIcon = () => (
   </svg>
 );
 
-export default async function HomePage() {
+// Composant pour la modale d'image agrandie
+const ImageModal = ({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) => (
+  <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4" onClick={onClose}>
+    <div className="relative max-w-full max-h-full">
+      <button
+        onClick={onClose}
+        className="absolute -top-10 right-0 text-white text-3xl hover:text-gray-300"
+        aria-label="Fermer"
+      >
+        ✕
+      </button>
+      <ImageWithFallback
+        src={src}
+        alt={alt}
+        className="max-w-[90vw] max-h-[90vh] object-contain"
+      />
+    </div>
+  </div>
+);
+
+export default function HomePage() {
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const config = await fetchGeneralConfig();
   const events = await fetchSheetData<EventItemType>(siteConfig.sheetTabs.agenda);
 
@@ -26,6 +50,7 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-12">
+      {/* Section Héro */}
       <section
         className="relative rounded-2xl overflow-hidden bg-cover bg-center h-[450px] flex items-center justify-center text-center text-white shadow-lg"
         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${heroBg})` }}
@@ -33,24 +58,20 @@ export default async function HomePage() {
         <div className="p-6 max-w-3xl space-y-4">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">{config.nom || uiText.home.heroTitle}</h1>
           <p className="text-lg md:text-xl text-gray-200">{config.slogan || uiText.home.heroSubtitle}</p>
-          <div className="flex flex-wrap justify-center gap-4 pt-2">
-            <Link href="/agenda" className="bg-[#D97706] hover:bg-[#b56305] text-white font-bold py-3 px-6 rounded-lg transition shadow">
-              {uiText.home.agendaBtn}
-            </Link>
-            <Link href="/medias" className="bg-[#A0522D] hover:bg-[#804020] text-white font-bold py-3 px-6 rounded-lg transition shadow">
-              {uiText.home.mediasBtn}
-            </Link>
-          </div>
+          {/* Boutons supprimés ici */}
         </div>
       </section>
 
+      {/* Section Logo + Présentation */}
       <section className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-8">
         {config.logo && (
-          <ImageWithFallback
-            src={formatDriveImageUrl(config.logo)}
-            alt={config.nom}
-            className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#A0522D]"
-          />
+          <button onClick={() => setIsImageModalOpen(true)} aria-label="Agrandir le logo">
+            <ImageWithFallback
+              src={formatDriveImageUrl(config.logo)}
+              alt={config.nom}
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#A0522D] hover:opacity-80 transition"
+            />
+          </button>
         )}
         <div className="space-y-3 text-center md:text-left flex-grow">
           <h2 className="text-2xl font-bold text-[#2C221E]">{config.presentationTitre}</h2>
@@ -62,7 +83,18 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Modale pour le logo */}
+      {isImageModalOpen && config.logo && (
+        <ImageModal
+          src={formatDriveImageUrl(config.logo)}
+          alt={config.nom}
+          onClose={() => setIsImageModalOpen(false)}
+        />
+      )}
+
+      {/* Grille des sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Section Événements à venir */}
         <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
           <div className="flex justify-between items-center border-b-2 border-[#A0522D] pb-2">
             <h2 className="text-2xl font-bold text-[#2C221E]">{uiText.home.upcomingEvents}</h2>
@@ -93,6 +125,7 @@ export default async function HomePage() {
           )}
         </section>
 
+        {/* Section Contact */}
         <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
           <h2 className="text-2xl font-bold text-[#2C221E] border-b-2 border-[#A0522D] pb-2">{uiText.nav.contact}</h2>
           <p className="text-gray-700 leading-relaxed text-sm">
@@ -126,6 +159,55 @@ export default async function HomePage() {
           </div>
         </section>
       </div>
+
+      {/* Nouvelle section Navigation après Contact */}
+      <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 className="text-2xl font-bold text-[#2C221E] border-b-2 border-[#A0522D] pb-2 mb-4">Navigation</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <Link
+            href="/"
+            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
+          >
+            {uiText.nav.home}
+          </Link>
+          <Link
+            href="/presentation"
+            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
+          >
+            {uiText.nav.presentation}
+          </Link>
+          <Link
+            href="/news"
+            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
+          >
+            {uiText.nav.news}
+          </Link>
+          <Link
+            href="/agenda"
+            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
+          >
+            {uiText.nav.agenda}
+          </Link>
+          <Link
+            href="/medias"
+            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
+          >
+            {uiText.nav.medias}
+          </Link>
+          <Link
+            href="/liens"
+            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
+          >
+            {uiText.nav.links}
+          </Link>
+          <Link
+            href="/membres"
+            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center md:col-span-2"
+          >
+            Privé
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
