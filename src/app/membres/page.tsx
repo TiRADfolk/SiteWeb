@@ -1,4 +1,5 @@
 import { fetchGeneralConfig, fetchSheetData } from '@/utils/fetchSheets';
+import { siteConfig } from '@/constants/siteConfig';
 import { ResourceItem } from '@/types';
 import MembresClient from '@/components/MembresClient';
 
@@ -11,7 +12,7 @@ function parseFrenchDate(dateStr: string): number {
 
 export default async function MembresPage() {
   const config = await fetchGeneralConfig();
-  const resources = await fetchSheetData<ResourceItem>('membres');
+  const resources = await fetchSheetData<ResourceItem>(siteConfig.sheetTabs.membres);
 
   const visibleResources = resources
     .filter(r => r.afficher?.toLowerCase().includes('oui'))
