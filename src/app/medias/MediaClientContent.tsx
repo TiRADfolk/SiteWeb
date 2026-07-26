@@ -6,12 +6,23 @@ import { formatDriveImageUrl } from '@/utils/driveHelper';
 import { uiText } from '@/constants/siteConfig';
 import ImageWithFallback from '@/components/ImageWithFallback';
 
+const PlayIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+    <path d="M8 5v14l11-7z" />
+  </svg>
+);
+
 export default function MediaClientContent({ medias }: { medias: MediaItem[] }) {
   const [filter, setFilter] = useState<'Tous' | 'Image' | 'Video' | 'Audio'>('Tous');
+  const [loadedIds, setLoadedIds] = useState<Set<string>>(new Set());
 
   const filteredMedias = filter === 'Tous' 
     ? medias 
     : medias.filter(m => m.type?.toLowerCase() === filter.toLowerCase());
+
+  const handleLoad = (id: string) => {
+    setLoadedIds(prev => new Set(prev).add(id));
+  };
 
   return (
     <div className="space-y-8">
@@ -39,6 +50,8 @@ export default function MediaClientContent({ medias }: { medias: MediaItem[] }) 
             const isVideo = media.type?.toLowerCase() === 'video';
             const isAudio = media.type?.toLowerCase() === 'audio';
             const isImage = media.type?.toLowerCase() === 'image';
+            const isLoaded = loadedIds.has(media.id);
+            const thumbnail = formatDriveImageUrl(media.miniature) || uiText.common.fallbackImage;
 
             return (
               <div key={media.id} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col">
@@ -56,24 +69,53 @@ export default function MediaClientContent({ medias }: { medias: MediaItem[] }) 
                   )}
 
                   {isVideo && (
-                    <div className="w-full aspect-video rounded-lg overflow-hidden bg-black">
-                      <iframe
-                        src={media.url}
-                        title={media.titre}
-                        className="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
+                    <div className="w-full aspect-video rounded-lg overflow-hidden bg-black relative">
+                      {isLoaded ? (
+                        <iframe
+                          src={media.url}
+                          title={media.titre}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <button
+                          onClick={() => handleLoad(media.id)}
+                          className="w-full h-full relative group"
+                          aria-label={`Lire la vidéo : ${media.titre}`}
+                        >
+                          <ImageWithFallback
+                            src={thumbnail}
+                            alt={media.titre}
+                            className="w-full h-full object-cover"
+                          />
+                          <span className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition">
+                            <span className="bg-white/90 text-[#2C221E] rounded-full p-4 shadow-lg group-hover:scale-110 transition">
+                              <PlayIcon />
+                            </span>
+                          </span>
+                        </button>
+                      )}
                     </div>
                   )}
 
                   {isAudio && (
                     <div className="w-full py-4">
-                      <iframe
-                        src={media.url}
-                        title={media.titre}
-                        className="w-full h-20 rounded-lg"
-                      />
+                      {isLoaded ? (
+                        <iframe
+                          src={media.url}
+                          title={media.titre}
+                          className="w-full h-20 rounded-lg"
+                        />
+                      ) : (
+                        <button
+                          onClick={() => handleLoad(media.id)}
+                          className="w-full flex items-center justify-center gap-2 bg-[#A0522D] hover:bg-[#804020] text-white font-semibold py-3 rounded-lg transition"
+                        >
+                          <PlayIcon />
+                          Écouter
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
