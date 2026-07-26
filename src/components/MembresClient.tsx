@@ -125,14 +125,16 @@ export default function MembresClient({
             <tr>
               <th className="px-4 py-3 font-bold">Date</th>
               <th className="px-4 py-3 font-bold">Catégorie</th>
+              <th className="px-4 py-3 font-bold">Type</th>
               <th className="px-4 py-3 font-bold">Description</th>
+              <th className="px-4 py-3 font-bold">Statut</th>
               <th className="px-4 py-3 font-bold">Liens</th>
             </tr>
           </thead>
           <tbody>
             {resourcesFiltrees.length === 0 ? (
               <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-gray-500 italic">
+                <td colSpan={6} className="px-4 py-6 text-center text-gray-500 italic">
                   Aucune ressource pour cette catégorie.
                 </td>
               </tr>
@@ -141,7 +143,21 @@ export default function MembresClient({
                 <tr key={r.id} className="border-t border-gray-100">
                   <td className="px-4 py-3 whitespace-nowrap">{r.date}</td>
                   <td className="px-4 py-3">{r.categorie}</td>
+                  <td className="px-4 py-3">{r.type}</td>
                   <td className="px-4 py-3">{r.description}</td>
+                  <td className="px-4 py-3">
+                    {r.statut && (
+                      <span className={`text-xs px-2 py-0.5 rounded font-semibold whitespace-nowrap ${
+                        r.statut.toLowerCase() === 'ok'
+                          ? 'bg-green-100 text-green-800'
+                          : r.statut.includes('%')
+                          ? 'bg-amber-100 text-amber-800'
+                          : 'bg-orange-100 text-orange-800'
+                      }`}>
+                        {r.statut}
+                      </span>
+                    )}
+                  </td>
                   <td className="px-4 py-3 space-x-3">
                     {r.url1 && (
                       <a href={r.url1} target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline font-medium">
