@@ -14,6 +14,8 @@ export default function ImageWithFallback({ src, alt, className }: ImageWithFall
       src={src}
       alt={alt}
       className={className}
+      loading="lazy"
+      decoding="async"
       onError={(e) => {
         (e.target as HTMLImageElement).src = uiText.common.fallbackImage;
       }}
