@@ -67,7 +67,9 @@ export interface ResourceItem {
   date: string;
   afficher: string;
   categorie: string;
+  type: string;
   description: string;
+  statut: string;
   url1: string;
   url2: string;
 }
