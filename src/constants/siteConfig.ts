@@ -1,4 +1,3 @@
-
 export const siteConfig = {
   sheetId: "1fAjSBN_Kcy-M86lvNPJzuktnO3zs8vZL4k4ByPKjQmA",
   sheetTabs: {
@@ -7,7 +6,8 @@ export const siteConfig = {
     agenda: "Agenda",
     trombinoscope: "Trombinoscope",
     medias: "Medias",
-    liensUtiles: "LiensUtiles"
+    liensUtiles: "LiensUtiles",
+    membres: "membres"
   }
 };
 
