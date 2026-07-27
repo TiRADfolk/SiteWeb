@@ -1,5 +1,3 @@
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,7 +6,15 @@
   --bg-primary: #FAF7F2;
   --text-primary: #2C221E;
   --accent-folk: #A0522D;
+  --accent-folk-hover: #804020;
   --accent-secondary: #D97706;
+  --nav-padding-y: 16px;
+  --nav-padding-x: 16px;
+  --brand-font-size: 20px;
+  --nav-font-size: 14px;
+  --nav-icon-size: 24px;
+  --nav-gap: 24px;
+  --nav-menu-radius: 8px;
 }
 
 body {
@@ -22,13 +28,12 @@ body {
 .whitespace-pre-line {
   white-space: pre-line;
 }
-/* Empêche les éléments médias de dépasser de l'écran sur mobile */
+
 img, iframe, video {
   max-width: 100% !important;
   height: auto;
 }
 
-/* Casse automatiquement les textes/liens trop longs */
 p, h1, h2, h3, a {
   overflow-wrap: break-word;
   word-break: break-word;
