@@ -41,7 +41,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <main className="flex-grow max-w-7xl w-full mx-auto px-4 py-8 overflow-x-hidden">
           {children}
         </main>
-        <Footer />
+        <Footer 
+          email={config.email} 
+          phone={config.telephone} 
+          address={config.adresse} 
+        />
       </body>
     </html>
   );
