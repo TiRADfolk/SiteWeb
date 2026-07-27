@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import Link from 'next/link'; // Ajoute l'import pour Link
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { ResourceItem } from '@/types';
 
 interface MembresClientProps {
@@ -9,7 +10,7 @@ interface MembresClientProps {
   dateProchaineRepet: string;
   aTravailler: string;
   aReflechir: string;
-  adminSiteUrl: string; // Nouvelle prop
+  adminSiteUrl: string;
   resources: ResourceItem[];
 }
 
@@ -21,10 +22,13 @@ export default function MembresClient({
   adminSiteUrl,
   resources,
 }: MembresClientProps) {
+  const router = useRouter();
   const [unlocked, setUnlocked] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
   const [categorieActive, setCategorieActive] = useState<string>('Toutes');
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshDone, setRefreshDone] = useState(false);
 
   const categories = useMemo(() => {
     const set = new Set(resources.map(r => r.categorie).filter(Boolean));
@@ -43,6 +47,18 @@ export default function MembresClient({
       setError(false);
     } else {
       setError(true);
+    }
+  }
+
+  async function handleRefresh() {
+    setRefreshing(true);
+    setRefreshDone(false);
+    try {
+      await fetch('/api/refresh', { method: 'POST' });
+      router.refresh();
+      setRefreshDone(true);
+    } finally {
+      setRefreshing(false);
     }
   }
 
@@ -75,17 +91,26 @@ export default function MembresClient({
 
   return (
     <div className="space-y-8">
-      {/* En-tête avec titre et bouton Admin */}
+      {/* En-tête avec titre, bouton refresh et bouton Admin */}
       <div className="flex justify-between items-center border-b-4 border-[#A0522D] pb-2">
         <h1 className="text-3xl font-extrabold text-[#2C221E]">Espace Membres</h1>
-        {adminSiteUrl && (
-          <Link
-            href={adminSiteUrl}
-            className="bg-[#D97706] hover:bg-[#b56305] text-white font-bold py-2 px-4 rounded-lg transition shadow"
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className="bg-[#2C221E] hover:bg-[#42332d] disabled:opacity-50 text-white font-bold py-2 px-4 rounded-lg transition shadow text-sm"
           >
-            Admin
-          </Link>
-        )}
+            {refreshing ? 'Mise à jour...' : refreshDone ? '✓ À jour' : '🔄 Mettre à jour'}
+          </button>
+          {adminSiteUrl && (
+            <Link
+              href={adminSiteUrl}
+              className="bg-[#D97706] hover:bg-[#b56305] text-white font-bold py-2 px-4 rounded-lg transition shadow"
+            >
+              Admin
+            </Link>
+          )}
+        </div>
       </div>
 
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 grid grid-cols-1 sm:grid-cols-3 gap-6">
