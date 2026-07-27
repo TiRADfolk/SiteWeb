@@ -5,7 +5,7 @@ export async function fetchSheetData<T>(tabName: string): Promise<T[]> {
   const url = `https://docs.google.com/spreadsheets/d/${siteConfig.sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
 
   try {
-    const response = await fetch(url, { next: { revalidate: 3600 } });
+    const response = await fetch(url, { next: { revalidate: 3600, tags: ['sheet-data'] } });
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const csvText = await response.text();
