@@ -7,6 +7,7 @@ export const siteConfig = {
     trombinoscope: "Trombinoscope",
     medias: "Medias",
     liensUtiles: "LiensUtiles",
+parametres: "parametres",
     membres: "membres"
   }
 };
