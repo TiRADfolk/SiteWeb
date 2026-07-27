@@ -1,52 +1,25 @@
-import './globals.css';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { fetchGeneralConfig, fetchStyleConfig } from '@/utils/fetchSheets';
+import { uiText } from '@/constants/siteConfig';
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const config = await fetchGeneralConfig();
-  const style = await fetchStyleConfig();
+interface FooterProps {
+  email?: string;
+  phone?: string;
+  address?: string;
+}
 
-  const cssVars = `
-    :root {
-      --bg-primary: ${style.bg || '#FAF7F2'};
-      --text-primary: ${style.text || '#2C221E'};
-      --accent-folk: ${style.primary || '#A0522D'};
-      --accent-folk-hover: ${style['primary-hover'] || '#804020'};
-      --accent-secondary: ${style.secondary || '#D97706'};
-      --nav-padding-y: ${style['nav-padding-y'] || '16px'};
-      --nav-padding-x: ${style['nav-padding-x'] || '16px'};
-      --brand-font-size: ${style['brand-font-size'] || '20px'};
-      --nav-font-size: ${style['nav-font-size'] || '14px'};
-      --nav-icon-size: ${style['nav-icon-size'] || '24px'};
-      --nav-gap: ${style['nav-gap'] || '24px'};
-      --nav-menu-radius: ${style['nav-menu-radius'] || '8px'};
-    }
-  `;
-
+export default function Footer({ email, phone, address }: FooterProps) {
   return (
-    <html lang="fr" className="overflow-x-hidden">
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: cssVars }} />
-      </head>
-      <body className="min-h-screen flex flex-col justify-between bg-[var(--bg-primary)] overflow-x-hidden w-full">
-        <Navbar
-          siteName={config.nom}
-          sticky={style['nav-sticky'] !== 'FALSE'}
-          shadow={style['nav-shadow'] !== 'FALSE'}
-          showContact={style['nav-show-contact'] === 'TRUE'}
-          privateLabel={style['nav-private-label'] || 'Privé'}
-          linksDesktop={style['nav-links-desktop']}
-        />
-        <main className="flex-grow max-w-7xl w-full mx-auto px-4 py-8 overflow-x-hidden">
-          {children}
-        </main>
-        <Footer 
-          email={config.email} 
-          phone={config.telephone} 
-          address={config.adresse} 
-        />
-      </body>
-    </html>
+    <footer className="bg-[#2C221E] text-[#FAF7F2] mt-16 border-t-4 border-[#A0522D]">
+      <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h4 className="text-lg font-bold text-[#D97706] mb-2">{uiText.nav.contact}</h4>
+          {email && <p className="text-sm">Email : {email}</p>}
+          {phone && <p className="text-sm">Tél : {phone}</p>}
+          {address && <p className="text-sm whitespace-pre-line mt-1">{address}</p>}
+        </div>
+        <div className="text-left md:text-right text-sm text-gray-400">
+          <p>© {new Date().getFullYear()} Tous droits réservés.</p>
+        </div>
+      </div>
+    </footer>
   );
 }
