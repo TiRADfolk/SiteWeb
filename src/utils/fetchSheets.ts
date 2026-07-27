@@ -36,3 +36,17 @@ export async function fetchGeneralConfig(): Promise<Record<string, string>> {
 
   return configMap;
 }
+
+export async function fetchStyleConfig(): Promise<Record<string, string>> {
+  const data = await fetchSheetData<{ Clé: string; Code: string }>(siteConfig.sheetTabs.parametres);
+  const styleMap: Record<string, string> = {};
+
+  data.forEach((row) => {
+    const key = row['Clé'];
+    if (key) {
+      styleMap[key.trim()] = row['Code'] ? row['Code'].trim() : '';
+    }
+  });
+
+  return styleMap;
+}
