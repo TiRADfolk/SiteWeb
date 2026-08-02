@@ -5,6 +5,13 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ResourceItem } from '@/types';
 
+function parseFrenchDate(dateStr: string): number {
+  const parts = dateStr?.split('/').map(Number) || [];
+  const [day, month, year] = parts;
+  if (!day || !month || !year) return 0;
+  return new Date(year, month - 1, day).getTime();
+}
+
 interface MembresClientProps {
   motDePasse: string;
   dateProchaineRepet: string;
@@ -13,6 +20,9 @@ interface MembresClientProps {
   adminSiteUrl: string;
   resources: ResourceItem[];
 }
+
+type SortKey = 'ordre' | 'date' | 'description';
+type SortDir = 'asc' | 'desc';
 
 export default function MembresClient({
   motDePasse,
@@ -29,6 +39,8 @@ export default function MembresClient({
   const [categorieActive, setCategorieActive] = useState<string>('Toutes');
   const [refreshing, setRefreshing] = useState(false);
   const [refreshDone, setRefreshDone] = useState(false);
+  const [sortKey, setSortKey] = useState<SortKey>('date');
+  const [sortDir, setSortDir] = useState<SortDir>('desc');
 
   const categories = useMemo(() => {
     const set = new Set(resources.map(r => r.categorie).filter(Boolean));
@@ -39,6 +51,39 @@ export default function MembresClient({
     if (categorieActive === 'Toutes') return resources;
     return resources.filter(r => r.categorie === categorieActive);
   }, [resources, categorieActive]);
+
+  const resourcesTriees = useMemo(() => {
+    const sorted = [...resourcesFiltrees].sort((a, b) => {
+      let comp = 0;
+      if (sortKey === 'ordre') {
+        const na = parseFloat(a.ordre) || 0;
+        const nb = parseFloat(b.ordre) || 0;
+        comp = na - nb;
+      } else if (sortKey === 'date') {
+        comp = parseFrenchDate(a.date) - parseFrenchDate(b.date);
+      } else if (sortKey === 'description') {
+        comp = (a.description || '').localeCompare(b.description || '', 'fr');
+      }
+      return sortDir === 'asc' ? comp : -comp;
+    });
+    return sorted;
+  }, [resourcesFiltrees, sortKey, sortDir]);
+
+  function handleSort(key: SortKey) {
+    if (sortKey === key) {
+      setSortDir(prev => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortKey(key);
+      setSortDir('asc');
+    }
+  }
+
+  function SortIcon({ column }: { column: SortKey }) {
+    if (sortKey !== column) {
+      return <span className="text-gray-300 ml-1">↕</span>;
+    }
+    return <span className="text-[#A0522D] ml-1">{sortDir === 'asc' ? '↑' : '↓'}</span>;
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -148,59 +193,46 @@ export default function MembresClient({
         <table className="w-full text-left text-sm">
           <thead className="bg-amber-50/50 text-[#2C221E]">
             <tr>
-              <th className="px-4 py-3 font-bold">Date</th>
+              <th
+                className="px-4 py-3 font-bold cursor-pointer select-none whitespace-nowrap"
+                onClick={() => handleSort('ordre')}
+              >
+                Ordre <SortIcon column="ordre" />
+              </th>
+              <th
+                className="px-4 py-3 font-bold cursor-pointer select-none whitespace-nowrap"
+                onClick={() => handleSort('date')}
+              >
+                Date <SortIcon column="date" />
+              </th>
               <th className="px-4 py-3 font-bold">Catégorie</th>
               <th className="px-4 py-3 font-bold">Type</th>
-              <th className="px-4 py-3 font-bold">Description</th>
+              <th
+                className="px-4 py-3 font-bold cursor-pointer select-none whitespace-nowrap"
+                onClick={() => handleSort('description')}
+              >
+                Description <SortIcon column="description" />
+              </th>
+              <th className="px-4 py-3 font-bold">Complément</th>
               <th className="px-4 py-3 font-bold">Statut</th>
               <th className="px-4 py-3 font-bold">Liens</th>
             </tr>
           </thead>
           <tbody>
-            {resourcesFiltrees.length === 0 ? (
+            {resourcesTriees.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-6 text-center text-gray-500 italic">
+                <td colSpan={8} className="px-4 py-6 text-center text-gray-500 italic">
                   Aucune ressource pour cette catégorie.
                 </td>
               </tr>
             ) : (
-              resourcesFiltrees.map(r => (
+              resourcesTriees.map(r => (
                 <tr key={r.id} className="border-t border-gray-100">
+                  <td className="px-4 py-3 whitespace-nowrap">{r.ordre}</td>
                   <td className="px-4 py-3 whitespace-nowrap">{r.date}</td>
                   <td className="px-4 py-3">{r.categorie}</td>
                   <td className="px-4 py-3">{r.type}</td>
                   <td className="px-4 py-3">{r.description}</td>
+                  <td className="px-4 py-3">{r.complement}</td>
                   <td className="px-4 py-3">
                     {r.statut && (
-                      <span className={`text-xs px-2 py-0.5 rounded font-semibold whitespace-nowrap ${
-                        r.statut.toLowerCase() === 'ok'
-                          ? 'bg-green-100 text-green-800'
-                          : r.statut.includes('%')
-                          ? 'bg-amber-100 text-amber-800'
-                          : 'bg-orange-100 text-orange-800'
-                      }`}>
-                        {r.statut}
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 space-x-3">
-                    {r.url1 && (
-                      <a href={r.url1} target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline font-medium">
-                        Lien 1
-                      </a>
-                    )}
-                    {r.url2 && (
-                      <a href={r.url2} target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline font-medium">
-                        Lien 2
-                      </a>
-                    )}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
