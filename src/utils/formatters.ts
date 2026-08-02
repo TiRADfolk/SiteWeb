@@ -1,5 +1,3 @@
-
-
 export function formatDateFR(dateString: string): string {
   if (!dateString) return '';
   try {
@@ -21,4 +19,11 @@ export function isFutureDate(dateString: string): boolean {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return eventDate >= today;
+}
+
+export function parseFrenchDate(dateStr: string): number {
+  const parts = dateStr?.split('/').map(Number) || [];
+  const [day, month, year] = parts;
+  if (!day || !month || !year) return 0;
+  return new Date(year, month - 1, day).getTime();
 }
