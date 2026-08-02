@@ -236,3 +236,35 @@ export default function MembresClient({
                   <td className="px-4 py-3">{r.complement}</td>
                   <td className="px-4 py-3">
                     {r.statut && (
+                      <span className={`text-xs px-2 py-0.5 rounded font-semibold whitespace-nowrap ${
+                        r.statut.toLowerCase() === 'ok'
+                          ? 'bg-green-100 text-green-800'
+                          : r.statut.includes('%')
+                          ? 'bg-amber-100 text-amber-800'
+                          : 'bg-orange-100 text-orange-800'
+                      }`}>
+                        {r.statut}
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 space-x-3">
+                    {r.url1 && (
+                      <a href={r.url1} target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline font-medium">
+                        Lien 1
+                      </a>
+                    )}
+                    {r.url2 && (
+                      <a href={r.url2} target="_blank" rel="noopener noreferrer" className="text-[#A0522D] hover:underline font-medium">
+                        Lien 2
+                      </a>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
