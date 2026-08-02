@@ -1,14 +1,8 @@
 import { fetchGeneralConfig, fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig } from '@/constants/siteConfig';
+import { parseFrenchDate } from '@/utils/formatters';
 import { ResourceItem } from '@/types';
 import MembresClient from '@/components/MembresClient';
-
-function parseFrenchDate(dateStr: string): number {
-  const parts = dateStr?.split('/').map(Number) || [];
-  const [day, month, year] = parts;
-  if (!day || !month || !year) return 0;
-  return new Date(year, month - 1, day).getTime();
-}
 
 export default async function MembresPage() {
   const config = await fetchGeneralConfig();
@@ -24,7 +18,7 @@ export default async function MembresPage() {
       dateProchaineRepet={config['Date prochaine répet'] || ''}
       aTravailler={config['A travailler'] || ''}
       aReflechir={config['A réfléchir'] || ''}
-      adminSiteUrl={config['adminSite'] || ''} // Passe l'URL du bouton Admin
+      adminSiteUrl={config['adminSite'] || ''}
       resources={visibleResources}
     />
   );
