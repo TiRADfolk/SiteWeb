@@ -72,4 +72,6 @@ export interface ResourceItem {
   statut: string;
   url1: string;
   url2: string;
+  ordre: string;
+  complement: string;
 }
