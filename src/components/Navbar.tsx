@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { uiText } from '@/constants/siteConfig';
-import { UsersIcon, NewsIcon, CalendarIcon, ImageIcon, MailIcon } from './NavIcons';
+import { HomeIcon, UsersIcon, NewsIcon, CalendarIcon, ImageIcon, LinkChainIcon, LockIcon, MailIcon } from './NavIcons';
 
 interface NavbarProps {
   siteName?: string;
@@ -15,12 +15,17 @@ interface NavbarProps {
 }
 
 const ALL_LINKS: Record<string, { href: string; label: string; Icon: () => JSX.Element }> = {
+  home: { href: '/', label: uiText.nav.home, Icon: HomeIcon },
   presentation: { href: '/presentation', label: uiText.nav.presentation, Icon: UsersIcon },
   news: { href: '/news', label: uiText.nav.news, Icon: NewsIcon },
   agenda: { href: '/agenda', label: uiText.nav.agenda, Icon: CalendarIcon },
   medias: { href: '/medias', label: uiText.nav.medias, Icon: ImageIcon },
+  liens: { href: '/liens', label: uiText.nav.links, Icon: LinkChainIcon },
+  membres: { href: '/membres', label: 'Membres', Icon: LockIcon },
   contact: { href: '/contact', label: uiText.nav.contact, Icon: MailIcon },
 };
+
+const DEFAULT_KEYS = ['home', 'presentation', 'news', 'agenda', 'medias', 'liens', 'membres'];
 
 export default function Navbar({
   siteName,
@@ -34,7 +39,7 @@ export default function Navbar({
 
   const desktopKeys = linksDesktop
     ? linksDesktop.split(',').map(s => s.trim().toLowerCase()).filter(k => ALL_LINKS[k])
-    : ['presentation', 'news', 'agenda', 'medias'];
+    : DEFAULT_KEYS;
 
   if (showContact && !desktopKeys.includes('contact')) {
     desktopKeys.push('contact');
