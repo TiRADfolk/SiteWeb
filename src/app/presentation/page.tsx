@@ -5,6 +5,8 @@ import MemberCard from '@/components/MemberCard';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
 import ImageWithFallback from '@/components/ImageWithFallback';
 
+export const metadata = { title: 'Présentation' };
+
 export default async function PresentationPage() {
   const [config, members] = await Promise.all([
     fetchGeneralConfig(),
