@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { uiText } from '@/constants/siteConfig';
+import { UsersIcon, NewsIcon, CalendarIcon, ImageIcon, MailIcon } from './NavIcons';
 
 interface NavbarProps {
   siteName?: string;
@@ -13,12 +14,12 @@ interface NavbarProps {
   linksDesktop?: string;
 }
 
-const ALL_LINKS: Record<string, { href: string; label: string }> = {
-  presentation: { href: '/presentation', label: uiText.nav.presentation },
-  news: { href: '/news', label: uiText.nav.news },
-  agenda: { href: '/agenda', label: uiText.nav.agenda },
-  medias: { href: '/medias', label: uiText.nav.medias },
-  contact: { href: '/contact', label: uiText.nav.contact },
+const ALL_LINKS: Record<string, { href: string; label: string; Icon: () => JSX.Element }> = {
+  presentation: { href: '/presentation', label: uiText.nav.presentation, Icon: UsersIcon },
+  news: { href: '/news', label: uiText.nav.news, Icon: NewsIcon },
+  agenda: { href: '/agenda', label: uiText.nav.agenda, Icon: CalendarIcon },
+  medias: { href: '/medias', label: uiText.nav.medias, Icon: ImageIcon },
+  contact: { href: '/contact', label: uiText.nav.contact, Icon: MailIcon },
 };
 
 export default function Navbar({
@@ -64,15 +65,21 @@ export default function Navbar({
           className="flex items-center font-medium"
           style={{ gap: 'var(--nav-gap)', fontSize: 'var(--nav-font-size)' }}
         >
-          {desktopKeys.map((key) => (
-            <Link
-              key={key}
-              href={ALL_LINKS[key].href}
-              className="hover:text-[var(--accent-secondary)] transition hidden sm:inline"
-            >
-              {ALL_LINKS[key].label}
-            </Link>
-          ))}
+          {desktopKeys.map((key) => {
+            const { href, label, Icon } = ALL_LINKS[key];
+            return (
+              <Link
+                key={key}
+                href={href}
+                title={label}
+                aria-label={label}
+                className="hover:text-[var(--accent-secondary)] transition hidden sm:flex flex-col items-center gap-0.5"
+              >
+                <Icon />
+                <span className="text-[10px] leading-none">{label}</span>
+              </Link>
+            );
+          })}
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
