@@ -4,8 +4,10 @@ import Footer from '@/components/Footer';
 import { fetchGeneralConfig, fetchStyleConfig } from '@/utils/fetchSheets';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const config = await fetchGeneralConfig();
-  const style = await fetchStyleConfig();
+  const [config, style] = await Promise.all([
+    fetchGeneralConfig(),
+    fetchStyleConfig(),
+  ]);
 
   const cssVars = `
     :root {
