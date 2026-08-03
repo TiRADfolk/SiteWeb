@@ -6,8 +6,10 @@ import { formatDriveImageUrl } from '@/utils/driveHelper';
 import ImageWithFallback from '@/components/ImageWithFallback';
 
 export default async function PresentationPage() {
-  const config = await fetchGeneralConfig();
-  const members = await fetchSheetData<MemberItem>(siteConfig.sheetTabs.trombinoscope);
+  const [config, members] = await Promise.all([
+    fetchGeneralConfig(),
+    fetchSheetData<MemberItem>(siteConfig.sheetTabs.trombinoscope),
+  ]);
 
   return (
     <div className="space-y-12">
