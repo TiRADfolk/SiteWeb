@@ -1,9 +1,9 @@
-
-
 import { fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig, uiText } from '@/constants/siteConfig';
 import { MediaItem } from '@/types';
 import MediaClientContent from './MediaClientContent';
+
+export const metadata = { title: 'Médias' };
 
 export default async function MediasPage() {
   const medias = await fetchSheetData<MediaItem>(siteConfig.sheetTabs.medias);
