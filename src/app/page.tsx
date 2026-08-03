@@ -5,18 +5,32 @@ import { EventItemType } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
 import { isFutureDate, formatDateFR } from '@/utils/formatters';
 import ImageWithFallback from '@/components/ImageWithFallback';
+import ErrorOverlay from '@/components/ErrorOverlay';
 
-// Composant pour l'icône de loupe
 const SearchIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
   </svg>
 );
 
+// Vérifie la connexion au Google Sheet. Réutilise la même URL que
+// fetchGeneralConfig() ci-dessous : Next.js fusionne les deux appels
+// identiques automatiquement, donc ceci n'ajoute aucune requête réseau.
+async function checkConnection(): Promise<boolean> {
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${siteConfig.sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(siteConfig.sheetTabs.general)}`;
+    const res = await fetch(url, { next: { revalidate: 3600, tags: ['sheet-data'] } });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 export default async function HomePage() {
-  const [config, events] = await Promise.all([
+  const [config, events, isConnected] = await Promise.all([
     fetchGeneralConfig(),
     fetchSheetData<EventItemType>(siteConfig.sheetTabs.agenda),
+    checkConnection(),
   ]);
 
   const upcomingEvents = events
@@ -28,6 +42,8 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-12">
+      {!isConnected && <ErrorOverlay />}
+
       {/* Section Héro - Moins haute */}
       <section
         className="relative rounded-2xl overflow-hidden bg-cover bg-center h-[300px] flex items-center justify-center text-center text-white shadow-lg"
