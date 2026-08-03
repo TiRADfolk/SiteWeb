@@ -1,7 +1,7 @@
-
-
 import { fetchGeneralConfig } from '@/utils/fetchSheets';
 import { uiText } from '@/constants/siteConfig';
+
+export const metadata = { title: 'Contact' };
 
 export default async function ContactPage() {
   const config = await fetchGeneralConfig();
