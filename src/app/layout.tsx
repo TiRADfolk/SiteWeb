@@ -1,7 +1,20 @@
 import './globals.css';
+import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { fetchGeneralConfig, fetchStyleConfig } from '@/utils/fetchSheets';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const config = await fetchGeneralConfig();
+  const nom = config.nom || 'Folk Group';
+  return {
+    title: {
+      default: nom,
+      template: `%s | ${nom}`,
+    },
+    description: config.slogan || config.presentationTexte || undefined,
+  };
+}
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [config, style] = await Promise.all([
