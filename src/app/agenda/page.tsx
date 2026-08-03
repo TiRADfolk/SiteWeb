@@ -1,10 +1,10 @@
-
-
 import { fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig, uiText } from '@/constants/siteConfig';
 import { EventItemType } from '@/types';
 import EventItem from '@/components/EventItem';
 import { isFutureDate } from '@/utils/formatters';
+
+export const metadata = { title: 'Agenda & Concerts' };
 
 export default async function AgendaPage() {
   const events = await fetchSheetData<EventItemType>(siteConfig.sheetTabs.agenda);
