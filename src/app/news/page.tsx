@@ -1,9 +1,9 @@
-
-
 import { fetchSheetData } from '@/utils/fetchSheets';
 import { siteConfig, uiText } from '@/constants/siteConfig';
 import { NewsItem } from '@/types';
 import NewsCard from '@/components/NewsCard';
+
+export const metadata = { title: 'Actualités' };
 
 export default async function NewsPage() {
   const newsList = await fetchSheetData<NewsItem>(siteConfig.sheetTabs.news);
