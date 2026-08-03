@@ -14,8 +14,10 @@ const SearchIcon = () => (
 );
 
 export default async function HomePage() {
-  const config = await fetchGeneralConfig();
-  const events = await fetchSheetData<EventItemType>(siteConfig.sheetTabs.agenda);
+  const [config, events] = await Promise.all([
+    fetchGeneralConfig(),
+    fetchSheetData<EventItemType>(siteConfig.sheetTabs.agenda),
+  ]);
 
   const upcomingEvents = events
     .filter(e => isFutureDate(e.date))
