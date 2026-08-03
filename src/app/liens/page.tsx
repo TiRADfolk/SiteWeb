@@ -4,6 +4,8 @@ import { UsefulLink } from '@/types';
 import { formatDriveImageUrl } from '@/utils/driveHelper';
 import ImageWithFallback from '@/components/ImageWithFallback';
 
+export const metadata = { title: 'Liens Utiles' };
+
 export default async function LiensPage() {
   const links = await fetchSheetData<UsefulLink>(siteConfig.sheetTabs.liensUtiles);
 
