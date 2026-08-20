@@ -142,54 +142,6 @@ export default async function HomePage() {
         </section>
       </div>
 
-      {/* Section Navigation */}
-      <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h2 className="text-2xl font-bold text-[#2C221E] border-b-2 border-[#A0522D] pb-2 mb-4">Navigation</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <Link
-            href="/"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.home}
-          </Link>
-          <Link
-            href="/presentation"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.presentation}
-          </Link>
-          <Link
-            href="/news"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.news}
-          </Link>
-          <Link
-            href="/agenda"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.agenda}
-          </Link>
-          <Link
-            href="/medias"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.medias}
-          </Link>
-          <Link
-            href="/liens"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.links}
-          </Link>
-          <Link
-            href="/membres"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center md:col-span-2"
-          >
-            Privé
-          </Link>
-        </div>
-      </section>
-    </div>
+
   );
 }
