@@ -32,18 +32,14 @@ export default async function HomePage() {
     fetchSheetData<EventItemType>(siteConfig.sheetTabs.agenda),
     checkConnection(),
   ]);
-
   const upcomingEvents = events
     .filter(e => isFutureDate(e.date))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, 4);
-
   const heroBg = formatDriveImageUrl(config.lienBandeau) || uiText.common.fallbackImage;
-
   return (
     <div className="space-y-12">
       {!isConnected && <ErrorOverlay />}
-
       {/* Section Héro - Moins haute */}
       <section
         className="relative rounded-2xl overflow-hidden bg-cover bg-center h-[300px] flex items-center justify-center text-center text-white shadow-lg"
@@ -54,7 +50,6 @@ export default async function HomePage() {
           <p className="text-lg md:text-xl text-gray-200">{config.slogan || uiText.home.heroSubtitle}</p>
         </div>
       </section>
-
       {/* Section Logo + Présentation - Logo agrandi x1.5 */}
       <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-6 max-w-4xl mx-auto">
         {config.logo && (
@@ -73,7 +68,6 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
-
       {/* Grille des sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Section Événements à venir */}
@@ -106,7 +100,6 @@ export default async function HomePage() {
             </div>
           )}
         </section>
-
         {/* Section Contact */}
         <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
           <h2 className="text-2xl font-bold text-[#2C221E] border-b-2 border-[#A0522D] pb-2">{uiText.nav.contact}</h2>
@@ -122,7 +115,6 @@ export default async function HomePage() {
                 </a>
               </div>
             )}
-
             {config.telephone && (
               <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-amber-50/50 rounded-lg">
                 <span className="font-bold text-[#2C221E]">Téléphone :</span>
@@ -131,7 +123,6 @@ export default async function HomePage() {
                 </a>
               </div>
             )}
-
             {config.adresse && (
               <div className="p-4 bg-amber-50/50 rounded-lg space-y-1">
                 <span className="font-bold text-[#2C221E] block">Adresse & Siège :</span>
@@ -141,55 +132,6 @@ export default async function HomePage() {
           </div>
         </section>
       </div>
-
-      {/* Section Navigation */}
-      <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h2 className="text-2xl font-bold text-[#2C221E] border-b-2 border-[#A0522D] pb-2 mb-4">Navigation</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <Link
-            href="/"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.home}
-          </Link>
-          <Link
-            href="/presentation"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.presentation}
-          </Link>
-          <Link
-            href="/news"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.news}
-          </Link>
-          <Link
-            href="/agenda"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.agenda}
-          </Link>
-          <Link
-            href="/medias"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.medias}
-          </Link>
-          <Link
-            href="/liens"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center"
-          >
-            {uiText.nav.links}
-          </Link>
-          <Link
-            href="/membres"
-            className="bg-[#FAF7F2] hover:bg-[#f0e9e0] text-[#2C221E] font-medium py-3 px-4 rounded-lg transition shadow text-center md:col-span-2"
-          >
-            Privé
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }
