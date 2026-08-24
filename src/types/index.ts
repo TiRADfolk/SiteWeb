@@ -69,9 +69,8 @@ export interface ResourceItem {
   categorie: string;
   type: string;
   description: string;
+  tonalitenote: string;
   statut: string;
   url1: string;
   url2: string;
-  ordre: string;
-  complement: string;
-}
+  ordre: strin
