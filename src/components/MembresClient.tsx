@@ -214,6 +214,7 @@ export default function MembresClient({
                 Description <SortIcon column="description" />
               </th>
               <th className="px-4 py-3 font-bold">Complément</th>
+              <th className="px-4 py-3 font-bold">TonNote</th>
               <th className="px-4 py-3 font-bold">Statut</th>
               <th className="px-4 py-3 font-bold">Liens</th>
             </tr>
@@ -221,7 +222,7 @@ export default function MembresClient({
           <tbody>
             {resourcesTriees.length === 0 ? (
               <tr>
-                <td colSpan={8} className="px-4 py-6 text-center text-gray-500 italic">
+                <td colSpan={9} className="px-4 py-6 text-center text-gray-500 italic">
                   Aucune ressource pour cette catégorie.
                 </td>
               </tr>
@@ -234,6 +235,7 @@ export default function MembresClient({
                   <td className="px-4 py-3">{r.type}</td>
                   <td className="px-4 py-3">{r.description}</td>
                   <td className="px-4 py-3">{r.complement}</td>
+                  <td className="px-4 py-3">{r.tonalitenote}</td>
                   <td className="px-4 py-3">
                     {r.statut && (
                       <span className={`text-xs px-2 py-0.5 rounded font-semibold whitespace-nowrap ${
