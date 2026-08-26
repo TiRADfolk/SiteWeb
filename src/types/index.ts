@@ -9,6 +9,11 @@ export interface GeneralConfig {
   presentationTexte: string;
   descriptionLongue: string;
   lienBandeau: string;
+  mdp?: string;
+  'Date prochaine répet'?: string;
+  'A travailler'?: string;
+  'A réfléchir'?: string;
+  adminSite?: string;
 }
 
 export interface NewsItem {
@@ -69,8 +74,10 @@ export interface ResourceItem {
   categorie: string;
   type: string;
   description: string;
-  tonalitenote: string;
+  tonalitenote: string; // <-- Ajout de la nouvelle propriété
   statut: string;
   url1: string;
   url2: string;
-  ordre: strin
+  ordre: string;
+  complement: string; // <-- Déjà utilisé dans le code
+}
