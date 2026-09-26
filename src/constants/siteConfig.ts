@@ -1,5 +1,5 @@
 export const siteConfig = {
-  sheetId: "1ZOwT0sye0Tuul03MxP9UYyVDwddqjfoFec-Z6VUfTqQ",
+  sheetId: "1fAjSBN_Kcy-M86lvNPJzuktnO3zs8vZL4k4ByPKjQmA",
   sheetTabs: {
     general: "General",
     news: "News",
